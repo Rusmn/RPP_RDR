@@ -662,6 +662,18 @@ label:has(input[type="radio"]:focus-visible) {
 .peach {
   background: #faf0e4;
 }
+.rain {
+  background: #edf3e8;
+}
+.layered {
+  background: #ecefe7;
+}
+.sport {
+  background: #e8f1f3;
+}
+.batik {
+  background: #f3eae4;
+}
 .result-heading {
   display: flex;
   align-items: center;

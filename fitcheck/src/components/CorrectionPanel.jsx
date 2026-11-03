@@ -73,20 +73,22 @@ export default function CorrectionPanel({
           <X size={20} />
         </button>
       </div>
-      {!cornerstone ? (
+      {!cornerstone && (
         <div className="notice">
           <Info size={20} />
           <div>
             <strong>Cornerstone belum tersedia</strong>
             <p>
-              Setujui satu konsultasi yang sesuai dengan {result.conclusion}{" "}
-              terlebih dahulu. Kasus itu akan menjadi pembanding untuk rule{" "}
-              {result.lastFiredNode.id}.
+              Opsi di bawah tetap tersedia. Sebelum menyimpan rule, setujui satu
+              konsultasi yang memang sesuai dengan {result.conclusion}. Kasus
+              itu menjadi pembanding untuk rule {result.lastFiredNode.id};
+              setelah itu, konsultasikan lagi kasus yang ingin dikoreksi.
             </p>
           </div>
         </div>
-      ) : (
-        <form onSubmit={submit}>
+      )}
+      <form onSubmit={submit}>
+        {cornerstone && (
           <div className="compare-cases">
             <div>
               <h3>Kasus baru</h3>
@@ -98,130 +100,134 @@ export default function CorrectionPanel({
               <CaseSummary value={cornerstone} />
             </div>
           </div>
+        )}
+        <label className="field">
+          Outfit yang tepat
+          <select
+            value={conclusion}
+            onChange={(e) => setConclusion(e.target.value)}
+          >
+            {Object.keys(OUTFITS)
+              .filter((x) => x !== result.conclusion)
+              .map((x) => (
+                <option key={x}>{x}</option>
+              ))}
+          </select>
+        </label>
+        {suggestions.length > 0 && (
+          <div className="suggestions">
+            <p>Kondisi pembeda yang disarankan</p>
+            <div className="chip-row">
+              {suggestions.map((c, i) => (
+                <button
+                  type="button"
+                  className={`suggestion ${JSON.stringify(c) === JSON.stringify(condition) ? "selected" : ""}`}
+                  onClick={() => {
+                    setCondition(c);
+                    setError("");
+                  }}
+                  key={i}
+                >
+                  {conditionText(c)}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+        <div className="condition-fields">
           <label className="field">
-            Outfit yang tepat
+            Atribut
             <select
-              value={conclusion}
-              onChange={(e) => setConclusion(e.target.value)}
+              value={condition.attribute}
+              onChange={(e) => attributeChange(e.target.value)}
             >
-              {Object.keys(OUTFITS)
-                .filter((x) => x !== result.conclusion)
-                .map((x) => (
-                  <option key={x}>{x}</option>
-                ))}
+              {Object.entries(ATTRIBUTES).map(([key, v]) => (
+                <option value={key} key={key}>
+                  {v.label}
+                </option>
+              ))}
             </select>
           </label>
-          {suggestions.length > 0 && (
-            <div className="suggestions">
-              <p>Kondisi pembeda yang disarankan</p>
-              <div className="chip-row">
-                {suggestions.map((c, i) => (
-                  <button
-                    type="button"
-                    className={`suggestion ${JSON.stringify(c) === JSON.stringify(condition) ? "selected" : ""}`}
-                    onClick={() => {
-                      setCondition(c);
-                      setError("");
-                    }}
-                    key={i}
-                  >
-                    {conditionText(c)}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-          <div className="condition-fields">
-            <label className="field">
-              Atribut
-              <select
-                value={condition.attribute}
-                onChange={(e) => attributeChange(e.target.value)}
-              >
-                {Object.entries(ATTRIBUTES).map(([key, v]) => (
-                  <option value={key} key={key}>
-                    {v.label}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label className="field">
-              Operator
-              <select
-                value={condition.operator}
+          <label className="field">
+            Operator
+            <select
+              value={condition.operator}
+              onChange={(e) =>
+                setCondition({ ...condition, operator: e.target.value })
+              }
+            >
+              {(condition.attribute === "temperature"
+                ? [">", ">=", "<", "<="]
+                : ["=", "!="]
+              ).map((o) => (
+                <option key={o} value={o}>
+                  {o}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="field">
+            Nilai
+            {condition.attribute === "temperature" ? (
+              <input
+                type="number"
+                min="0"
+                max="45"
+                step="any"
+                required
+                value={condition.value}
                 onChange={(e) =>
-                  setCondition({ ...condition, operator: e.target.value })
+                  setCondition({
+                    ...condition,
+                    value:
+                      e.target.value === "" ? "" : Number(e.target.value),
+                  })
+                }
+              />
+            ) : (
+              <select
+                value={condition.value}
+                onChange={(e) =>
+                  setCondition({ ...condition, value: e.target.value })
                 }
               >
-                {(condition.attribute === "temperature"
-                  ? [">", ">=", "<", "<="]
-                  : ["=", "!="]
-                ).map((o) => (
-                  <option key={o} value={o}>
-                    {o}
+                {ATTRIBUTES[condition.attribute].values.map((v) => (
+                  <option value={v} key={v}>
+                    {LABELS[v]}
                   </option>
                 ))}
               </select>
-            </label>
-            <label className="field">
-              Nilai
-              {condition.attribute === "temperature" ? (
-                <input
-                  type="number"
-                  min="0"
-                  max="45"
-                  step="any"
-                  required
-                  value={condition.value}
-                  onChange={(e) =>
-                    setCondition({
-                      ...condition,
-                      value:
-                        e.target.value === "" ? "" : Number(e.target.value),
-                    })
-                  }
-                />
-              ) : (
-                <select
-                  value={condition.value}
-                  onChange={(e) =>
-                    setCondition({ ...condition, value: e.target.value })
-                  }
-                >
-                  {ATTRIBUTES[condition.attribute].values.map((v) => (
-                    <option value={v} key={v}>
-                      {LABELS[v]}
-                    </option>
-                  ))}
-                </select>
-              )}
-            </label>
-          </div>
+            )}
+          </label>
+        </div>
+        {cornerstone ? (
           <p className="helper">
             <Check size={15} />
             Kasus yang sudah disetujui akan diperiksa ulang sebelum rule
             disimpan.
           </p>
-          {error && (
-            <p className="error-message" role="alert">
-              {error}
-            </p>
-          )}
-          <div className="form-actions">
-            <button
-              className="button secondary"
-              type="button"
-              onClick={onCancel}
-            >
-              Batal
-            </button>
+        ) : null}
+        {error && (
+          <p className="error-message" role="alert">
+            {error}
+          </p>
+        )}
+        <div className="form-actions">
+          <button
+            className="button secondary"
+            type="button"
+            onClick={onCancel}
+          >
+            Batal
+          </button>
+          {cornerstone && (
             <button className="button primary" type="submit">
               <Plus size={17} />
               Simpan rule baru
             </button>
-          </div>
-        </form>
-      )}
+          )}
+        </div>
+      </form>
     </section>
   );
 }

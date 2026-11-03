@@ -139,8 +139,11 @@ export default function App() {
     }
   }
   function approve() {
-    save(approveCase(kb, consultation));
+    const next = approveCase(kb, consultation);
+    save(next);
+    setResult(infer(next, consultation));
     setApproved(true);
+    setCorrection(false);
     setMessage("Rekomendasi disetujui. Kasus validasi berhasil disimpan.");
   }
   function corrected(next) {

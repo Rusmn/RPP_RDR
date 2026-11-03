@@ -19,6 +19,26 @@ export const OUTFITS = {
     pieces: ["Linen shirt", "Lightweight trousers", "Loafers"],
     color: "peach",
   },
+  Raincoat: {
+    description: "Tetap nyaman dan terlindungi saat hujan.",
+    pieces: ["Raincoat", "Quick-dry trousers", "Waterproof shoes"],
+    color: "rain",
+  },
+  Jacket: {
+    description: "Lapisan ringan untuk cuaca sejuk dan gaya santai.",
+    pieces: ["Lightweight jacket", "Basic tee", "Jeans", "Sneakers"],
+    color: "layered",
+  },
+  Athleisure: {
+    description: "Fleksibel dan nyaman untuk bergerak aktif.",
+    pieces: ["Performance tee", "Joggers", "Running shoes"],
+    color: "sport",
+  },
+  Batik: {
+    description: "Tampil rapi dengan sentuhan motif lokal.",
+    pieces: ["Batik shirt", "Tailored trousers", "Loafers"],
+    color: "batik",
+  },
 };
 export const ATTRIBUTES = {
   occasion: { label: "Acara", values: ["Casual", "Semi-Formal", "Formal"] },

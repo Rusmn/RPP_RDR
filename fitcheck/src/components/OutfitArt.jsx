@@ -1,20 +1,32 @@
 export default function OutfitArt({ category = "Casual", hero = false }) {
   const formal = category.includes("Formal"),
-    polo = category === "Smart Casual";
+    polo = category === "Smart Casual",
+    raincoat = category === "Raincoat",
+    jacket = category === "Jacket",
+    athleisure = category === "Athleisure",
+    batik = category === "Batik";
   const shirt = hero
     ? "#f6eee0"
-    : formal
-      ? "#f7f1df"
-      : polo
-        ? "#cdc9e8"
-        : "#f6eee0";
+    : raincoat
+      ? "#e6c35f"
+      : jacket
+        ? "#8e9b7e"
+        : athleisure
+          ? "#91b9c5"
+          : batik
+            ? "#ae745c"
+            : formal
+              ? "#f7f1df"
+              : polo
+                ? "#cdc9e8"
+                : "#f6eee0";
   return (
     <svg
       className={`outfit-art ${hero ? "hero-art" : ""}`}
       viewBox="0 0 440 340"
       fill="none"
       role="img"
-      aria-label={`${category}: atasan, celana, dan sepatu`}
+      aria-label={`${category}: pilihan outfit lengkap`}
     >
       <ellipse cx="228" cy="307" rx="176" ry="12" fill="#000" opacity=".035" />
       <path
@@ -38,6 +50,30 @@ export default function OutfitArt({ category = "Casual", hero = false }) {
           strokeLinejoin="round"
         />
         <path d="M109 83c4 17 23 18 28 0" stroke="#d8cfbe" strokeWidth="5" />
+        {(raincoat || jacket) && (
+          <>
+            <path
+              d="M108 85 122 105l15-20M122 105v118"
+              stroke={raincoat ? "#f8edc3" : "#64725e"}
+              strokeWidth="2.5"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M120 118h4m-4 17h4m-4 17h4m-4 17h4m-4 17h4"
+              stroke={raincoat ? "#b69b4f" : "#64725e"}
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+          </>
+        )}
+        {batik && (
+          <path
+            d="m96 122 4-4 4 4-4 4-4-4m12 0 4-4 4 4-4 4-4-4m-12 13 4-4 4 4-4 4-4-4m12 0 4-4 4 4-4 4-4-4m-12 13 4-4 4 4-4 4-4-4m12 0 4-4 4 4-4 4-4-4"
+            stroke="#edc99d"
+            strokeWidth="1.5"
+            strokeLinejoin="round"
+          />
+        )}
         {(formal || polo) && (
           <>
             <path
