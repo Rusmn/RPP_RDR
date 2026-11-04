@@ -2,6 +2,8 @@
 
 Sistem pakar rekomendasi outfit berbasis **Ripple Down Rules (RDR)**. Dibangun dengan React, Vite, JavaScript, Tailwind CSS, dan Lucide. Seluruh inferensi dan penyimpanan berjalan di browser tanpa backend atau API AI.
 
+Perintah berikut dijalankan dari root repositori.
+
 ## Menjalankan
 
 Memerlukan Node.js 20.19+ atau 22.12+.
@@ -51,7 +53,7 @@ QA browser memakai Playwright dengan Google Chrome yang terpasang. Dapat disesua
 - Audit aksesibilitas otomatis WCAG 2.1 AA dengan axe pada halaman konsultasi, koreksi, dan RDR.
 - Screenshot dan laporan QA tersedia di folder `qa/`.
 
-Lihat `qa/QA-REPORT.md` untuk hasil dan tautan screenshot.
+Lihat [laporan QA](../qa/QA-REPORT.md) untuk hasil dan tautan screenshot.
 
 ## Struktur
 
