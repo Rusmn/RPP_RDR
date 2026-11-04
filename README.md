@@ -143,11 +143,3 @@ Pengujian browser menggunakan Playwright dan Google Chrome yang terpasang. Alama
 Aturan dan kasus validasi disimpan dalam LocalStorage dengan kunci `fitcheck.rdr.v1`. Data terpisah untuk setiap peramban, perangkat, dan asal situs; sinkronisasi antarperangkat tidak tersedia. **Reset knowledge base** menghapus aturan tambahan dan kasus tersimpan setelah konfirmasi.
 
 Rekomendasi mengikuti aturan yang ditetapkan pakar. Aplikasi tidak menganalisis foto pakaian, mengambil cuaca secara otomatis, atau mencari produk dari marketplace.
-
-## Dokumentasi
-
-- [Laporan teknis PDF](report/fitcheck-laporan.pdf)
-- [Sumber laporan LaTeX](report/fitcheck-laporan.tex)
-- [Panduan penggunaan dan pengembangan](docs/DEVELOPMENT.md)
-
-Font DM Sans disertakan dengan lisensi OFL pada [`public/fonts/OFL.txt`](public/fonts/OFL.txt).
